@@ -2,14 +2,18 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# (Optional but useful) for audio encoding later
-RUN apt-get update && apt-get install -y --no-install-recommends ffmpeg \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential gcc g++ git \
+    ffmpeg \
+    libsndfile1 \
+    libffi-dev libssl-dev \
   && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt /app/requirements.txt
 
-COPY app ./app
+RUN pip install --upgrade pip setuptools wheel \
+ && pip install --no-cache-dir -r requirements.txt
 
-EXPOSE 5050
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "5050"]
+COPY . /app
+
+CMD ["python", "-m", "uvicorn", "app:app", "--host", "0.0.0.0", "--port", "5050"]
