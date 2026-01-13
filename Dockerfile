@@ -3,13 +3,20 @@ FROM python:3.11-slim
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential gcc g++ git \
+    build-essential \
+    gcc \
+    g++ \
+    git \
+    curl \
+    ca-certificates \
+    pkg-config \
+    rustc \
+    cargo \
     ffmpeg \
     libsndfile1 \
-    libffi-dev libssl-dev \
+    libffi-dev \
+    libssl-dev \
   && rm -rf /var/lib/apt/lists/*
-RUN apt-get update && apt-get install -y --no-install-recommends \
-  build-essential gcc g++ git rustc cargo ...
 
 RUN pip install --upgrade pip setuptools wheel \
  && pip install --no-cache-dir -r requirements.txt
