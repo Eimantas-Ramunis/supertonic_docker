@@ -1,0 +1,6 @@
+fastapi
+uvicorn[standard]
+numpy
+soundfile
+# plus whatever Supertonic’s Python package/deps are per their install guide
+supertonictts
