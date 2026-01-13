@@ -1,0 +1,17 @@
+services:
+  supertonic-tts:
+    build: .
+    container_name: supertonic-tts
+    ports:
+      - "5050:5050"
+    volumes:
+      - supertonic_models:/models
+      - supertonic_cache:/cache
+    environment:
+      MODEL_DIR: /models
+      CACHE_DIR: /cache
+    restart: unless-stopped
+
+volumes:
+  supertonic_models:
+  supertonic_cache:
